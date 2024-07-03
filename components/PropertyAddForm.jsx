@@ -75,7 +75,23 @@ const PropertyAddForm = () => {
       amenities: updatedAmenities,
     }));
   };
+  const handleImageChange = (e) => {
+    const { files } = e.target;
 
+    // Clone images array
+    const updatedImages = [...fields.images];
+
+    // Add new files to the array
+    for (const file of files) {
+      updatedImages.push(file);
+    }
+
+    // Update state with array of images
+    setFields((prevFields) => ({
+      ...prevFields,
+      images: updatedImages,
+    }));
+  };
   return (
     <form>
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
