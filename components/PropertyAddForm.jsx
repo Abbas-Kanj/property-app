@@ -3,6 +3,33 @@
 import React, { useState } from "react";
 
 const PropertyAddForm = () => {
+  const [fields, setFields] = useState({
+    type: "Apartment",
+    name: "Test Property",
+    description: "",
+    location: {
+      street: "",
+      city: "Test City",
+      state: "Test State",
+      zipcode: "",
+    },
+    beds: "3",
+    baths: "2",
+    square_feet: "1800",
+    amenities: ["Free Parking", "Wifi"],
+    rates: {
+      weekly: "",
+      monthly: "2000",
+      nightly: "",
+    },
+    seller_info: {
+      name: "",
+      email: "test@test.com",
+      phone: "",
+    },
+    images: [],
+  });
+
   return (
     <form>
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
