@@ -17,6 +17,36 @@ const ProfilePage = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const handleDeleteProperty = async (propertyId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this property?"
+    );
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/properties/${propertyId}`, {
+        method: "DELETE",
+      });
+
+      if (res.status === 200) {
+        // Remove the property from state
+        const updatedProperties = properties.filter(
+          (property) => property._id !== propertyId
+        );
+        setProperties(updatedProperties);
+
+        toast.success("Property Deleted");
+      } else {
+        toast.error("Failed to delete property");
+      }
+    } catch (error) {
+      toast.error("Failed to delete property");
+      console.log(error);
+    }
+  };
+
   return (
     <section className="bg-blue-50">
       <div className="container m-auto py-24">
