@@ -1,11 +1,22 @@
 "use client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useSession } from "next-auth/react";
 import profileDefault from "@/assets/images/profile.png";
 import Spinner from "@/components/Spinner";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
+  const { data: session } = useSession();
+  const profileImage = session?.user.image;
+  const profileName = session?.user.name;
+  const profileEmail = session?.user.email;
+
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   return (
     <section className="bg-blue-50">
       <div className="container m-auto py-24">
