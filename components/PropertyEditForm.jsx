@@ -35,6 +35,28 @@ const PropertyEditForm = () => {
     },
   });
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Check if nested property
+    if (name.includes(".")) {
+      const [outerKey, innerKey] = name.split(".");
+      setFields((prevFields) => ({
+        ...prevFields,
+        [outerKey]: {
+          ...prevFields[outerKey],
+          [innerKey]: value,
+        },
+      }));
+    } else {
+      // Not nested
+      setFields((prevFields) => ({
+        ...prevFields,
+        [name]: value,
+      }));
+    }
+  };
+
   return (
     mounted &&
     !loading && (
