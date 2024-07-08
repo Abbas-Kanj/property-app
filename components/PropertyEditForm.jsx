@@ -1,4 +1,40 @@
+"use client";
+import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { fetchProperty } from "@/utils/requests";
+import { toast } from "react-toastify";
+
 const PropertyEditForm = () => {
+  const { id } = useParams();
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  const [fields, setFields] = useState({
+    type: "",
+    name: "",
+    description: "",
+    location: {
+      street: "",
+      city: "",
+      state: "",
+      zipcode: "",
+    },
+    beds: "",
+    baths: "",
+    square_feet: "",
+    amenities: ["", ""],
+    rates: {
+      weekly: "",
+      monthly: "",
+      nightly: "",
+    },
+    seller_info: {
+      name: "",
+      email: "",
+      phone: "",
+    },
+  });
+
   return (
     mounted &&
     !loading && (
