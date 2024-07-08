@@ -104,6 +104,35 @@ const PropertyEditForm = () => {
     }
   };
 
+  useEffect(() => {
+    setMounted(true);
+
+    // Fetch property data
+    const fetchPropertyData = async () => {
+      try {
+        const propertyData = await fetchProperty(id);
+
+        // Check rates for null, if so make empty string
+        if (propertyData && propertyData.rates) {
+          const defaultRates = { ...propertyData.rates };
+          for (const rate in defaultRates) {
+            if (defaultRates[rate] === null) {
+              defaultRates[rate] = "";
+            }
+          }
+          propertyData.rates = defaultRates;
+        }
+
+        setFields(propertyData);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPropertyData();
+  }, []);
+
   return (
     mounted &&
     !loading && (
