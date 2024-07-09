@@ -8,6 +8,24 @@ import Spinner from "./Spinner";
 import Image from "next/image";
 
 const PropertyMap = ({ property }) => {
+  const [loading, setLoading] = useState(true);
+  const [geoCodeError, setGeoCodeError] = useState(false);
+  const [lat, setLat] = useState(null);
+  const [lng, setLong] = useState(null);
+  const [viewport, setViewport] = useState({
+    latitude: 0,
+    longitude: 0,
+    zoom: 12,
+    width: "100%",
+    height: "500px",
+  });
+
+  setDefaults({
+    key: process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY,
+    language: "en",
+    region: "us",
+  });
+
   return (
     !loading && (
       <Map
