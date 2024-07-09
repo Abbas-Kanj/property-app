@@ -5,6 +5,33 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const SavedPropertiesPage = () => {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await fetch("/api/bookmarks", {
+          method: "GET",
+        });
+
+        if (res.status === 200) {
+          const data = await res.json();
+          setProperties(data);
+        } else {
+          console.log(res.statusText);
+          toast.error("Failed to fetch saved properties");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Failed to fetch saved properties");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProperties();
+  }, []);
+
   return loading ? (
     <Spinner loading={loading} />
   ) : (
