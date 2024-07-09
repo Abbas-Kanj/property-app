@@ -9,8 +9,14 @@ const BookmarkButton = ({ property }) => {
   const userId = session?.user?.id;
 
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
     const checkBookmarkStatus = async () => {
       try {
         const res = await fetch("/api/bookmarks/check", {
@@ -29,6 +35,8 @@ const BookmarkButton = ({ property }) => {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     checkBookmarkStatus();
@@ -61,6 +69,9 @@ const BookmarkButton = ({ property }) => {
       toast.error("Something went wrong");
     }
   };
+
+  if (loading) return <p className="text-center">Loading...</p>;
+
   return isBookmarked ? (
     <button
       onClick={handleClick}
@@ -73,7 +84,7 @@ const BookmarkButton = ({ property }) => {
       onClick={handleClick}
       className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
     >
-      <FaBookmark className="mr-2" /> Bookmark Bookmark
+      <FaBookmark className="mr-2" /> Bookmark Property
     </button>
   );
 };
