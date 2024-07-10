@@ -30,6 +30,7 @@ const PropertyCard = ({ property }) => {
         sizes="100vw"
         height={0}
         width={0}
+        property={true}
         className="w-full h-auto rounded-t-xl"
       />
       <div className="p-4">
