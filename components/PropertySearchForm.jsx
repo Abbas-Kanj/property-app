@@ -1,7 +1,24 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const PropertySearchForm = () => {
+  const [location, setLocation] = useState("");
+  const [propertyType, setPropertyType] = useState("All");
+
+  const router = useRouter();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (location === "" && propertyType === "All") {
+      router.push("/properties");
+    } else {
+      const query = `?location=${location}&propertyType=${propertyType}`;
+      router.push(`/properties/search-results${query}`);
+    }
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
